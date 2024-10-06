@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spillvalg</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 50px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s ease;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-link {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 20px 40px;
+            margin: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 24px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-link:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .game-link:nth-child(1) {
+            background-color: #ff6b6b; /* Rød */
+        }
+
+        .game-link:nth-child(2) {
+            background-color: #4ecdc4; /* Grønn */
+        }
+
+        .game-link:nth-child(1):hover {
+            background-color: #ff4f4f; /* Lysere rød */
+        }
+
+        .game-link:nth-child(2):hover {
+            background-color: #3bb5a0; /* Lysere grønn */
+        }
+
+        /* Responsiv design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .game-link {
+                font-size: 20px;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Velg et spill</h1>
+    <a href="index.html" class="game-link">Poengmultiplikator Spill</a>
+    <a href="flappybird.html" class="game-link">Flappy Bird</a>
+
+</body>
+</html>

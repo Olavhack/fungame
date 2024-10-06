@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - Lett Versjon</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #70c5ce;
+            overflow: hidden;
+        }
+        canvas {
+            background-color: #70c5ce;
+            border: 2px solid #000;
+        }
+        #scoreboard {
+            font-size: 24px;
+            margin: 20px;
+        }
+        #restartButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #restartButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="flappyCanvas" width="400" height="600"></canvas>
+<div id="scoreboard">
+    Poeng: <span id="currentScore">0</span> | Beste poeng: <span id="highScore">0</span>
+</div>
+<button id="restartButton" style="display:none;">Spill på nytt</button>
+
+<script>
+    const canvas = document.getElementById('flappyCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Spillvariabler
+    let birdY = 150;
+    let birdX = 50;
+    let gravity = 0.3; // Redusert gravitasjon
+    let lift = -8; // Økt løft
+    let velocity = 0;
+    let score = 0;
+    let highScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+    let isGameOver = false;
+
+    const pipes = [];
+    const pipeWidth = 50;
+    const pipeGap = 200; // Økt avstand mellom rørene
+    const pipeFrequency = 700; // Hvor ofte nye rør vises
+
+    function drawBird() {
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(birdX, birdY, 30, 30); // Tegner fuglen
+    }
+
+    function drawPipes() {
+        ctx.fillStyle = 'green';
+        pipes.forEach(pipe => {
+            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top); // Øvre rør
+            ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipeWidth, pipe.bottom); // Nedre rør
+        });
+    }
+
+    function updatePipes() {
+        if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - pipeFrequency) {
+            const top = Math.random() * (canvas.height - pipeGap - 100) + 20;
+            const bottom = canvas.height - top - pipeGap;
+            pipes.push({ x: canvas.width, top: top, bottom: bottom });
+        }
+        pipes.forEach(pipe => {
+            pipe.x -= 2; // Beveg rør mot venstre
+            // Sjekk kollisjon
+            if (birdX + 30 > pipe.x && birdX < pipe.x + pipeWidth) {
+                if (birdY < pipe.top || birdY + 30 > canvas.height - pipe.bottom) {
+                    isGameOver = true; // Spill over
+                }
+            }
+        });
+        // Fjern rør som er ute av skjermen
+        if (pipes.length && pipes[0].x < -pipeWidth) {
+            pipes.shift();
+            score++; // Øk poengsum
+        }
+    }
+
+    function jump() {
+        if (!isGameOver) {
+            velocity += lift; // Gi fuglen løft
+        }
+    }
+
+    function update() {
+        velocity += gravity; // Legg til tyngdekraft
+        birdY += velocity; // Oppdater fuglens posisjon
+
+        // Sjekk om fuglen faller av skjermen
+        if (birdY > canvas.height) {
+            isGameOver = true;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Rydde lerretet
+        drawBird();
+        drawPipes();
+        updatePipes();
+
+        // Oppdater poengsummen
+        document.getElementById('currentScore').textContent = score;
+
+        if (isGameOver) {
+            ctx.font = '30px Arial';
+            ctx.fillStyle = 'red';
+            ctx.fillText('Game Over', canvas.width / 4, canvas.height / 2);
+            ctx.fillText('Poeng: ' + score, canvas.width / 3, canvas.height / 2 + 40);
+            
+            // Oppdater og lagre beste poengsum
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('highScore', highScore);
+                document.getElementById('highScore').textContent = highScore;
+            }
+
+            // Vis restart-knapp
+            document.getElementById('restartButton').style.display = 'block';
+        } else {
+            requestAnimationFrame(update); // Oppdater spill
+        }
+    }
+
+    // Spill på nytt
+    function restartGame() {
+        birdY = 150;
+        velocity = 0;
+        score = 0;
+        isGameOver = false;
+        pipes.length = 0; // Tøm rør
+        document.getElementById('restartButton').style.display = 'none'; // Skjul restart-knappen
+        update(); // Start oppdateringssløyfen
+    }
+
+    // Start spill ved å trykke på musen
+    canvas.addEventListener('click', jump);
+    document.getElementById('restartButton').addEventListener('click', restartGame);
+    
+    // Oppdater beste poengsum visning
+    document.getElementById('highScore').textContent = highScore;
+
+    update(); // Start oppdateringssløyfen
+</script>
+
+</body>
+</html>

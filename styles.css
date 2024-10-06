@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+    padding: 50px;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.5s ease;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 20px 40px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 24px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Spesifikke knapper med forskjellige farger */
+#buyMultiplier {
+    background-color: #ff6b6b; /* Rød */
+}
+
+#toggleAutoClicker {
+    background-color: #4ecdc4; /* Grønn */
+}
+
+#buyMultiplier:hover {
+    background-color: #ff4f4f; /* Lysere rød */
+}
+
+#toggleAutoClicker:hover {
+    background-color: #3bb5a0; /* Lysere grønn */
+}
+
+#buyBackground {
+    background-color: #ffa500; /* Oransje */
+}
+
+#buyBackground:hover {
+    background-color: #ff8c00; /* Lysere oransje */
+}
+
+#resetGame {
+    background-color: #ffcc00; /* Gul */
+}
+
+#resetGame:hover {
+    background-color: #ffd700; /* Lysere gul */
+}
+
+/* Responsiv design */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 36px;
+    }
+
+    button {
+        font-size: 20px;
+        padding: 15px 30px;
+    }
+}
+
+p{
+    background-color: burlywood;
+    color: white;
+    padding: 20px 40px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 24px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}    
