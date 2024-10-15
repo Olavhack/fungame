@@ -46,7 +46,7 @@ toggleAutoClickerButton.addEventListener("click", () => {
                     score += multiplier;
                     scoreDisplay.textContent = score;
                 }
-            }, 1000); // Oppdaterer hver sekund
+            }, 0.0000000000000000001); // Oppdaterer hver sekund
         } else {
             clearInterval(intervalId); // Stopp autoklikker når det deaktiveres
         }
